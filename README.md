@@ -18,4 +18,8 @@ but so far it is just to follow common project structure. Gradle is not helpful 
 
 This project in GIT will include multiple branches for different purpose:
 
-- "restructuring" branch includes original code by Patrick Bailey and re-organized version
+- "[restructuring](https://github.com/C06A/pvc_pipe/blob/restructuring/src/main/openscad/pvc_pipe.scad)"
+  branch includes original code by Patrick Bailey and re-organized version
+- "[topdown](https://github.com/C06A/pvc_pipe/blob/topdown/src/main/openscad/pvc_pipe.scad)"
+  branch includes steps to develop top-down
+  

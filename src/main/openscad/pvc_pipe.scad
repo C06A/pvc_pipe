@@ -22,14 +22,20 @@ twoX4_dia = outer_dia; // [35:55]
 // How thick will be base
 twoX4_thickness = 10; // [5:25]
 
-color("red")
-  receptical();
+difference(){
+  pig();
 
-color("blue")
-  support();
+  color("pink") pipe();
+}
 
-color("orange")
-  base();
+module pig() {
+  color("red") receptical();
+
+  color("blue") support();
+
+  color("orange") base();
+}
+
 
 module receptical() {
   translate([0, 0, twoX4_thickness / 2]) {
@@ -46,11 +52,19 @@ module receptical() {
 module base() {
   linear_extrude(twoX4_thickness) {
     hull() {
-      for (i = [- 1, 1]) {
+      for (i = [-1, 1]) {
         translate([i * twoX4_dia / 2, 0]) {
           circle(d = twoX4_dia);
         }
       }
+    }
+  }
+}
+
+module pipe() {
+  rotate(angle, [0, -1, 0]){
+    translate([0, 0, twoX4_thickness / 2]){
+      cylinder(hole_depth, d = inner_dia);
     }
   }
 }

@@ -31,16 +31,8 @@ difference() {
     color("red") {
       translate([0, 0, - 3 * hole_depth / 2]) {
         rotate(angle, [0, - 1, 0]) {
-          difference() {
-            linear_extrude(3 * hole_depth) {
-              circle(d = outer_dia);
-            }
-
-            translate([0, 0, 2 * hole_depth + 1]) {
-              linear_extrude(hole_depth + 1) {
-                circle(d = inner_dia);
-              }
-            }
+          linear_extrude(3 * hole_depth) {
+            circle(d = outer_dia);
           }
         }
       }

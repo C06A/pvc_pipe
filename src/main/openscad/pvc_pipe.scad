@@ -25,6 +25,12 @@ twoX4_dia = 35; // [35:55]
 // How thick will be base
 twoX4_thickness = 10; // [5:25]
 
+// Diameter of the screw head
+screw_head_dia = 5;
+
+// Diameter of the screw
+screw_dia = 2.5;
+
 
 difference() {
   union() {
@@ -50,27 +56,22 @@ difference() {
 
         linear_extrude(twoX4_thickness) {
           hull() {
-            translate([twoX4_dia, 0]) {
-              circle(d = twoX4_dia);
-            }
-            translate([- twoX4_dia, 0]) {
-              circle(d = twoX4_dia);
+            for (i = [-1, 1]) {
+              translate([i * twoX4_dia, 0]) {
+                circle(d = twoX4_dia);
+              }
             }
           }
         }
 
 
         //Screw holes
-        translate([twoX4_dia, 0, - 1]) {
-          cylinder(twoX4_thickness + 2, 2.5, 2.5, $fn = 6);
-          translate([0, 0, twoX4_thickness / 2 + 1]) {
-            cylinder(twoX4_thickness / 2 + 1, 5, 5, $fn = 6);
-          }
-        }
-        translate([- twoX4_dia, 0, - 1]) {
-          cylinder(twoX4_thickness + 2, 2.5, 2.5, $fn = 6);
-          translate([0, 0, twoX4_thickness / 2 + 1]) {
-            cylinder(twoX4_thickness / 2 + 1, 5, 5, $fn = 6);
+        for (i = [-1, 1]) {
+          translate([i * twoX4_dia, 0, - 1]) {
+            cylinder(twoX4_thickness + 2, screw_dia, screw_dia, $fn = 6);
+            translate([0, 0, twoX4_thickness / 2 + 1]) {
+              cylinder(twoX4_thickness / 2 + 1, screw_head_dia, screw_head_dia, $fn = 6);
+            }
           }
         }
       }
@@ -91,18 +92,16 @@ difference() {
   translate([cone_bottom / 2, 0, 0]) {
     rotate(- 90, [0, 1, 0]) {
       linear_extrude(cone_bottom) {
-        polygon(points =
-          [[0, twoX4_dia / 2], [0, 2 * twoX4_dia],
-            [hole_depth, 2 * twoX4_dia],
-            [hole_depth, 40],
-            [3 / 5 * hole_depth, twoX4_dia / 2]
-          ]);
-        polygon(points =
-          [[0, - twoX4_dia / 2], [0, - 2 * twoX4_dia],
-            [hole_depth, - 2 * twoX4_dia],
-            [hole_depth, - 40],
-            [3 / 5 * hole_depth, - twoX4_dia / 2]
-          ]);
+        for (i = [-1,1]) {
+          polygon(points = [
+              [0, i * twoX4_dia / 2],
+              [0, i * 2 * twoX4_dia],
+              [hole_depth, i * 2 * twoX4_dia],
+              [hole_depth, i * 40],
+              [3 / 5 * hole_depth, i * twoX4_dia / 2]
+            ]
+          );
+        }
       }
     }
   }

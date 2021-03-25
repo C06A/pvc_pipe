@@ -22,6 +22,12 @@ twoX4_dia = outer_dia; // [35:55]
 // How thick will be base
 twoX4_thickness = 10; // [5:25]
 
+// Diameter of the screw head
+screw_head_dia = 5;
+
+// Diameter of the screw
+screw_dia = 2.5;
+
 difference(){
   pig();
 
@@ -50,13 +56,20 @@ module receptical() {
 }
 
 module base() {
-  linear_extrude(twoX4_thickness) {
-    hull() {
-      for (i = [-1, 1]) {
-        translate([i * twoX4_dia / 2, 0]) {
-          circle(d = twoX4_dia);
+  difference(){
+    linear_extrude(twoX4_thickness) {
+      hull() {
+        for (i = [-1, 1]) {
+          translate([i * twoX4_dia / 2, 0]) {
+            circle(d = twoX4_dia);
+          }
         }
       }
+    }
+
+    for (i = [-1, 1]) {
+      translate([i * twoX4_dia / 1.5, 0, -1])
+        screwHoll();
     }
   }
 }
@@ -66,5 +79,12 @@ module pipe() {
     translate([0, 0, twoX4_thickness / 2]){
       cylinder(hole_depth, d = inner_dia);
     }
+  }
+}
+
+module screwHoll() {
+  cylinder(twoX4_thickness + 2, screw_dia, screw_dia, $fn= 6);
+  translate([0, 0, twoX4_thickness / 2 + 1]){
+    cylinder(twoX4_thickness / 2 + 1, screw_head_dia, screw_head_dia, $fn = 6);
   }
 }
